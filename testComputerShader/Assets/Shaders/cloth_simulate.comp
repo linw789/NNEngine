@@ -1,0 +1,61 @@
+#version 430
+
+// std 430 alignment layout
+// http://stackoverflow.com/questions/23628259/how-to-properly-pad-and-align-data-in-opengl-for-std430-layout
+layout(std430, binding = 0) buffer NextPosition
+{	
+	vec3 nextPos[];
+};
+
+layout(std430, binding = 1) buffer PreviousPosition
+{
+	vec3 prePos[];
+};
+
+layout(std430, binding = 3) buffer CurrentPosition
+{
+	vec3 curPos[];
+};
+
+uint colNum = 10;
+uint rowNum = 10;
+float RestLength = 1.0;
+float DiagLength = sqrt(2) * RestLength;
+float dt = 0.01666667;
+float Gravity = vec3(0, -5.0, 0);
+uint ITERATIONS = 4;
+layout(local_size_x = 1, local_size_y = 1, local_size_z = 1) in;
+
+// constraint vector
+vec3 computeConstraintVec(vec3 a, vec3 b, float restLength)
+{
+	vec3 dvec = b - a;
+	float dvecLength = length(dvec);
+	return dvec * (dvecLength - restLength) / dvecLength * 0.5;
+}
+
+void main()
+{
+	// ID starts from 0, 
+	uint row = gl_GlobalInvocationID.z;
+	uint column = gl_GlobalInvocationID.x;
+	uint index = rowNum * (column) + (row);
+
+	nextPos[index] = curPos[index];// + vec3(0, 0.01, 0);
+	//prePos[index] = curPos[index];
+	//curPos[index] = nextPos[index];
+	
+	memoryBarrierBuffer();
+    
+    barrier();
+	
+	// apply agravity
+	// two anchor points
+	//if ((1 == row && 1 == column) || (1 == row && width == ))
+	//nextPos[index] = 2 * curPos[index] - prePos[index] + Gravity * dt * dt;
+	
+	// process constraints
+	// four neighbour points
+	
+	
+}
