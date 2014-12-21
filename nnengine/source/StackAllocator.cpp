@@ -29,7 +29,7 @@ NNEvoid *StackAllocator::allocL(size_t s, size_t align /* = 4 */)
 	// adding (4) advances the pointer to 0x0006(align range is 0x0004 to 0x0007).
 	// Then & ~(AND operator, NOT operator) wipes out least significant bits, 
 	// makes the pointer back to aligned position, in this case 0x0004.
-	NNEvoid *ptr = (NNEvoid *)(((NNEuint)m_LTopPtr + extraSize) & ~(align));
+	NNEvoid *ptr = (NNEvoid *)(((NNEuint)m_LTopPtr + extraSize) & ~(align - 1));
 
 	// store allocation sequence number
 	*((NNEuint *)ptr - 2) = m_numAllocL;
@@ -68,7 +68,7 @@ NNEvoid *StackAllocator::allocH(size_t s, size_t align)
 
 	alwaysAssertMsg((NNEuint)m_HTopPtr > (NNEuint)m_LTopPtr, "Lower stack and high stack collide!");
 
-	NNEvoid *ptr = (NNEvoid *)(((NNEuint)m_HTopPtr + extraSize) &~ (align));
+	NNEvoid *ptr = (NNEvoid *)(((NNEuint)m_HTopPtr + extraSize) &~ (align - 1));
 
 	// store allocation sequence number
 	*((NNEuint *)ptr - 2) = m_numAllocH;
