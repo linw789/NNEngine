@@ -30,6 +30,9 @@ public:
 	NNEvoid getAabb(AABB *aabb, const Mat4 &worldMat) const
 	{
 		// inversely rotated local axes
+		// worldMat * Vec3(1, 0, 0)
+		// worldMat * Vec3(0, 1, 0)
+		// worldMat * Vec3(0, 0, 1)
 		Vec3 invAxisX = Vec3(worldMat[0][0], worldMat[1][0], worldMat[2][0]);
 		Vec3 invAxisY = Vec3(worldMat[0][1], worldMat[1][1], worldMat[2][1]);
 		Vec3 invAxisZ = Vec3(worldMat[0][2], worldMat[1][2], worldMat[2][2]);
@@ -43,8 +46,8 @@ public:
 		// transform max_point into world space, but we only need one component 
 		// from each point, so following
 		NNEfloat maxX = Vec3::dot(invAxisX, maxX_point) + center_worldspace.x;
-		NNEfloat maxY = Vec3::dot(invAxisY, maxY_point) + center_worldspace.y;;
-		NNEfloat maxZ = Vec3::dot(invAxisZ, maxZ_point) + center_worldspace.z;;
+		NNEfloat maxY = Vec3::dot(invAxisY, maxY_point) + center_worldspace.y;
+		NNEfloat maxZ = Vec3::dot(invAxisZ, maxZ_point) + center_worldspace.z;
 
 		NNEfloat minX = center_worldspace.x - maxX + center_worldspace.x;
 		NNEfloat minY = center_worldspace.y - maxY + center_worldspace.y;
