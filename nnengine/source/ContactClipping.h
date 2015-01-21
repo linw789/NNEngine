@@ -23,8 +23,8 @@ public:
 
 	// clip vertices against a plane
 	// d = signed distance between the origin and the plane
-	// if the origin is on the side that the normal points to, d is negative,
-	// otherwise d is positive
+	// if the origin is on the side that the normal points to, d = dot(p, n),
+	// p is one point on the plane
 	NNEvoid clipAgainstPlane(const Array<Vec3> &vertIn, Array<Vec3> &vertOut, const Vec3 &normal, NNEfloat d);
 
 private:
