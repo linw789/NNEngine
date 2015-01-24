@@ -12,7 +12,7 @@ namespace NNE{
 // so they can be called all at one time to save gl call overhead.
 // glVertexAttribPointer's first paremeter "index"​ will get its attribute 
 // data from whatever buffer object is currently bound to GL_ARRAY_BUFFER.
-// Therefore, one hase to call glBindBuffer(GL_ARRAY_BUFFER, id) before
+// Therefore, one has to call glBindBuffer(GL_ARRAY_BUFFER, id) before
 // any glVertexAttribPointer calls.
 class VertexArrayObject
 {
